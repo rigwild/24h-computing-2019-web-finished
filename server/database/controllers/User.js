@@ -2,14 +2,16 @@
 
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import boom from '@hapi/boom'
 
+import { User, Exporter, Importer } from '../models'
 import { TEST_MODE, jwtSecret } from '../../../config'
 import { dbLogger } from '../../winston.config'
 import { formatLog, formatError } from '../../functions'
 
-export default CustomModel => ({
+export default {
   get Model() {
-    return CustomModel
+    return User
   },
 
   log(data, format = true) {
@@ -28,9 +30,13 @@ export default CustomModel => ({
    */
   async register(username, password, role, address, phone) {
     try {
+      if (!['importer', 'exporter'].some(x => role.toLowerCase() === x))
+        throw boom.badRequest('You can only choose the role "importer" or "exporter".')
+
       // Hash the password and create the user
       const hash = await bcrypt.hash(password, 10)
-      const doc = await CustomModel.create({ username, password: hash, role, address, phone })
+      const model = role.toLowerCase() === 'importer' ? Importer : Exporter
+      const doc = await model.create({ username, password: hash, address, phone })
 
       this.log(`New user was created. username=${username}, id=${doc.id}`)
       return { username, role }
@@ -56,7 +62,7 @@ export default CustomModel => ({
   async login(username, password) {
     try {
       // Check username exists
-      const user = await CustomModel.findOne({ username }).select('+password')
+      const user = await User.findOne({ username }).select('+password')
       if (!user) throw new Error('Unknown user')
 
       // Check password is valid
@@ -90,7 +96,7 @@ export default CustomModel => ({
    * @throws Could not find the user to delete
    */
   async delete(userId) {
-    const doc = await CustomModel.findByIdAndDelete(userId)
+    const doc = await User.findByIdAndDelete(userId)
     this.log(`A user was deleted. id=${doc.id}`)
     return doc.id
   },
@@ -102,10 +108,10 @@ export default CustomModel => ({
    * @throws Could not find the user
    */
   async find(userId) {
-    let user = await CustomModel.findById(userId)
+    let user = await User.findById(userId)
     if (!user) throw new Error('User not found.')
 
     user.__v = undefined
     return user
   }
-})
+}

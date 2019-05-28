@@ -1,9 +1,9 @@
-import _user from './_user'
+import User from './User'
 import Exporter from '../models/Exporter'
 import Importer from '../models/Importer'
 
 export default {
-  ..._user(Importer),
+  ...User,
 
   async getOffer(offerId) {
     const doc = await Exporter.findOne({ 'offers._id': offerId })
@@ -42,7 +42,7 @@ export default {
         }
       },
       { runValidators: true, new: true })
-
+    console.log(newOffer)
     return true
   },
 

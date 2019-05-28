@@ -1,46 +1,21 @@
 'use strict'
 
-import mongoose, { Schema } from 'mongoose'
-import _user from './_user'
+import { Schema } from 'mongoose'
+import User from './User'
+import { coffeeType, integerOnly } from './_utils'
 
-const integerOnly = {
-  type: Number,
-  get: v => Math.round(v),
-  set: v => Math.round(v)
-}
-
-const coffeeType = {
-  type: String,
-  enum: ['arabica', 'robusta'],
-  required: true
-}
-
-
-export default mongoose.model('Exporter', new Schema({
-  ..._user,
+/**
+ * @type {mongoose.Model}
+ */
+const Exporter = User.discriminator('Exporter', new Schema({
   offers: [
     {
-      active: {
-        type: Boolean,
-        default: true
-      },
+      active: { type: Boolean, default: true },
       coffeeType,
-      originCountryCode: {
-        type: String,
-        required: true
-      },
-      orderable: {
-        ...integerOnly,
-        required: true
-      },
-      real: {
-        ...integerOnly,
-        required: true
-      },
-      bagPrice: {
-        ...integerOnly,
-        required: true
-      }
+      originCountryCode: { type: String, required: true },
+      orderable: { ...integerOnly, required: true },
+      real: { ...integerOnly, required: true },
+      bagPrice: { ...integerOnly, required: true }
     }
   ],
   orders: [
@@ -56,22 +31,12 @@ export default mongoose.model('Exporter', new Schema({
         default: () => new Date()
       },
       coffeeType,
-      originCountryCode: {
-        type: String,
-        required: true
-      },
-      quantity: {
-        ...integerOnly,
-        required: true
-      },
-      importerId: {
-        type: String,
-        required: true
-      },
-      fromOfferId: {
-        type: String,
-        required: true
-      }
+      originCountryCode: { type: String, required: true },
+      quantity: { ...integerOnly, required: true },
+      importerId: { type: String, required: true },
+      fromOfferId: { type: String, required: true }
     }
   ]
 }))
+
+export default Exporter

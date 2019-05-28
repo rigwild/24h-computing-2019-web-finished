@@ -1,9 +1,9 @@
-import _user from './_user'
+import User from './User'
 import Exporter from '../models/Exporter'
 import Importer from '../models/Importer'
 
 export default {
-  ..._user(Exporter),
+  ...User,
 
   async createOffer(userId, coffeeType, originCountryCode, amount, bagPrice) {
     const doc = await Exporter.findByIdAndUpdate(userId, {

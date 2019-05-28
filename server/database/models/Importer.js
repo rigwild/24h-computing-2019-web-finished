@@ -1,8 +1,11 @@
 'use strict'
 
-import mongoose, { Schema } from 'mongoose'
-import _user from './_user'
+import { Schema } from 'mongoose'
+import User from './User'
 
-export default mongoose.model('Importer', new Schema({
-  ..._user
-}))
+/**
+ * @type {mongoose.Model}
+ */
+const Importer = User.discriminator('Importer', new Schema({}))
+
+export default Importer
