@@ -10,7 +10,7 @@ import { checkJwt, checkJwtRole } from '../middlewares/auth'
 
 const router = express.Router()
 
-router.get('/orders', checkJwt, checkJwtRole('importer'), asyncMiddleware(async (req, res) => {
+router.get('/orders', checkJwt, checkJwtRole('Importer'), asyncMiddleware(async (req, res) => {
   const data = await db.Importer.listOrders(req.user.id)
     .catch(err => {
       throw boom.badRequest(`Could not get the list of orders. ${err.message}`)
@@ -19,7 +19,7 @@ router.get('/orders', checkJwt, checkJwtRole('importer'), asyncMiddleware(async 
   res.json({ data })
 }))
 
-router.post('/buy', checkJwt, checkJwtRole('importer'), asyncMiddleware(async (req, res) => {
+router.post('/buy', checkJwt, checkJwtRole('Importer'), asyncMiddleware(async (req, res) => {
   checkRequiredParameters(['offerId', 'quantity'], req.body)
   const { offerId, quantity } = req.body
 

@@ -24,9 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.5",
     "morgan": "^1.9.1",
-    "vuex-persistedstate": "^2.5.4",
-    "winston": "^3.2.1",
-    "ws": "^7.0.0"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
@@ -41,11 +39,11 @@
     "nodemon": "^1.19.0",
     "svgmap": "^1.2.0",
     "vue": "^2.6.10",
-    "vue-native-websocket": "^2.0.13",
     "vue-promised": "^1.2.0",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "postcss": {
     "plugins": {

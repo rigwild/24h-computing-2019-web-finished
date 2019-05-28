@@ -1,10 +1,10 @@
 <template>
   <div class="mt-5">
     <ul>
-      <li v-for="(country,index) of countries" :key="country.countryName">
+      <li v-for="(country, index) of countries" :key="country.countryName">
         <div class="country-list-card d-flex justify-content-around">
           <div class="country-rank">
-            <span>#{{ index+1 }}</span>
+            <span>#{{ index + 1 }}</span>
           </div>
           <div class="country-detail d-flex flex-column justify-content-between">
             <div class="country-title d-flex align-items-center">
@@ -13,7 +13,7 @@
                 {{ country.name }}
               </span>
               <span class="country-coffee">
-                {{ country.coffee_quantity/1000 }}k Ton of Coffee / {{ Math.round(country.coffee_quantity/total*10000)/100 }}% of worldwide production
+                {{ country.coffee_quantity / 1000 }}k Ton of Coffee / {{ Math.round(country.coffee_quantity / total * 10000) / 100 }}% of worldwide production
               </span>
             </div>
             <div class="country-metadata">
@@ -32,7 +32,7 @@
             </div>
           </div>
         </div>
-        <hr v-if="index+1 < countries.length">
+        <hr v-if="index + 1 < countries.length">
       </li>
     </ul>
   </div>
@@ -40,15 +40,15 @@
 
 <script>
 export default {
-  props:{
-    countries:{
+  props: {
+    countries: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
-  computed:{
-    total(countries) {
-      return this.countries.reduce((sum,country) => sum + country.coffee_quantity,0)
+  computed: {
+    total() {
+      return this.countries.reduce((sum, country) => sum + country.coffee_quantity, 0)
     }
   }
 }

@@ -13,7 +13,7 @@ export default [
   {
     path: '/orders',
     name: 'Orders',
-    component: () => import('@/views/Orders'),
+    component: () => import('@/views/Orders')
   },
   {
     path: '/order/:id',
@@ -24,7 +24,7 @@ export default [
   {
     path: '/offers',
     name: 'Offers',
-    component: () => import('@/views/Offers'),
+    component: () => import('@/views/Offers')
   },
   {
     path: '/offer/:id',

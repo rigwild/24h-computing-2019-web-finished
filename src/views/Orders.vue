@@ -22,7 +22,6 @@
 
 <script>
 import apiWrapper from '@/apiWrapper'
-// import ButtonLoading from '@/components/ButtonLoading'
 import Loader from '@/components/Loader'
 
 export default {
@@ -31,9 +30,11 @@ export default {
     Loader
   },
   data() {
-    return { orders: [] }
+    return {
+      orders: null
+    }
   },
-  async mounted() {
+  mounted() {
     this.orders = apiWrapper.getOrders()
   }
 }

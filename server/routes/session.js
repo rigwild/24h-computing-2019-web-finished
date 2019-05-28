@@ -15,11 +15,7 @@ router.post('/register', checkNoJwt, asyncMiddleware(async (req, res) => {
 
   const { username, password, role, address, phone } = req.body
 
-  if (!['importer', 'exporter'].some(x => role === x))
-    throw boom.badRequest('You can only choose the role "importer" or "exporter".')
-
-  const customModel = role === 'importer' ? db.Importer : db.Exporter
-  const userObj = await customModel.register(username, password, role, address, phone)
+  const userObj = await db.User.register(username, password, role, address, phone)
     .catch(err => {
       throw boom.boomify(err, { statusCode: 400 })
     })
@@ -36,19 +32,10 @@ router.post('/login', checkNoJwt, asyncMiddleware(async (req, res) => {
 
   const { username, password } = req.body
 
-  let loginObj
-
-  loginObj = await db.Exporter.login(username, password)
+  const loginObj = await db.User.login(username, password)
     .catch(err => {
-      if (err.message === 'Invalid username or password.') return
       throw boom.boomify(err, { statusCode: 401 })
     })
-
-  if (!loginObj)
-    loginObj = await db.Importer.login(username, password)
-      .catch(err => {
-        throw boom.boomify(err, { statusCode: 401 })
-      })
 
   res.json({
     data: {

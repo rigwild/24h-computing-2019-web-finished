@@ -23,15 +23,15 @@
             />
           </b-form-group>
 
-          <b-form-group id="input-group-2">
+          <b-form-group id="input-group-3">
             <b-form-select v-model="role" :options="[{ value: 'importer', text: 'importer' }, { value: 'exporter', text: 'exporter' }]" />
           </b-form-group>
 
 
-          <b-form-group id="input-group-1">
-            Address<br>
+          <b-form-group id="input-group-4">
+            Address
             <b-form-input
-              id="input-1"
+              id="input-3"
               v-model="street.number"
               type="text"
               required
@@ -39,7 +39,7 @@
             />
 
             <b-form-input
-              id="input-1"
+              id="input-4"
               v-model="street.name"
               type="text"
               required
@@ -47,7 +47,7 @@
             />
 
             <b-form-input
-              id="input-1"
+              id="input-5"
               v-model="postalCode"
               type="text"
               required
@@ -55,7 +55,7 @@
             />
 
             <b-form-input
-              id="input-1"
+              id="input-6"
               v-model="city"
               type="text"
               required
@@ -63,7 +63,7 @@
             />
 
             <b-form-input
-              id="input-1"
+              id="input-7"
               v-model="countryCode"
               type="text"
               required
@@ -71,9 +71,9 @@
             />
           </b-form-group>
 
-          <b-form-group id="input-group-1">
+          <b-form-group id="input-group-5">
             <b-form-input
-              id="input-1"
+              id="input-8"
               v-model="phone"
               type="text"
               required

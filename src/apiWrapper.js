@@ -1,14 +1,7 @@
 import { apiPrefix, serverPort } from '../config'
 import { buildURI } from './functions'
 
-const host = '172.16.97.58'
-
-const shortenCall = (route, body) => {
-  return API_CALL(buildURI(host, serverPort, route), body ? {
-    method: 'POST',
-    body: JSON.stringify(body)
-  } : undefined)
-}
+const host = 'localhost'
 
 export const API_PREFIX = apiPrefix
 export const API_ROUTES = {
@@ -22,11 +15,7 @@ export const API_ROUTES = {
   offers: `${API_PREFIX}/exporter/offers`,
 
   getOrders: `${API_PREFIX}/exporter/orders`,
-  createOrders: orderId => `${API_PREFIX}/order/${orderId}`,
-
-  // Examples
-  example: (queryParam1, queryParam2 = false) => `${API_PREFIX}/example?${new URLSearchParams({ queryParam1, queryParam2 })}`,
-  exampleInsertDb: dataToAdd => `${API_PREFIX}/exampleInsertDb/${dataToAdd}`
+  createOrders: orderId => `${API_PREFIX}/order/${orderId}`
 }
 
 const tokenStorageKey = 'login-token'
@@ -66,17 +55,11 @@ export const API_CALL = async (URI, options = {}) => {
   return data
 }
 
-
-/**
- * Insert a message in the database
- * @param {String} message The message to be inserted
- * @returns {Promise<Object>} The API's response
- */
-export const exampleInsertDb = message => {
-  const route = API_ROUTES.exampleInsertDb(message)
-  const URI = buildURI(host, serverPort, route)
-
-  return API_CALL(URI, { method: 'POST' })
+const shortenCall = (route, body, method = 'GET') => {
+  return API_CALL(buildURI(host, serverPort, route), {
+    method,
+    body: body ? JSON.stringify(body) : undefined
+  })
 }
 
 /**
@@ -102,15 +85,7 @@ export const login = async (username, password) => {
   setToken(data.token)
   return data
 }
-/* eslint valid-jsdoc: 0 */
-/**
- * Register a new user
- * @param {String} username The username of the new user
- * @param {String} password The password of the new user
- * @param {String} role The role of the new user
- * @returns {Promise<Object>} The username of the new user
- * @throws The username is already taken
- */
+
 export const register = (username, password, role, street, postalCode, countryCode, phone, city) => {
   if (isLoggedIn()) throw new Error('You are already logged in.')
   return API_CALL(buildURI(host, serverPort, API_ROUTES.register), {
@@ -139,9 +114,9 @@ export const createOffer = (coffeeType, originCountryCode, amount, bagPrice) =>
     originCountryCode,
     amount,
     bagPrice
-  })
+  }, 'POST')
 
-export const getOrders = () => shortenCall(API_ROUTES.getOrders)
+export const getOrders = () => API_CALL(API_ROUTES.getOrders)
 export const createOrder = (orderId, newProgressState) =>
   shortenCall(API_ROUTES.createOrders(orderId), {
     newProgressState
@@ -149,7 +124,6 @@ export const createOrder = (orderId, newProgressState) =>
 
 export default {
   API_CALL,
-  exampleInsertDb,
   login,
   logout,
   register,

@@ -39,7 +39,7 @@
 
 .app-header {
   height: 7vh;
-  box-shadow: 0px 5px 20px -6px rgba(0,0,0,0.75);
+  /* box-shadow: 0px 5px 20px -6px rgba(0,0,0,0.75); */
   padding: 0;
 }
 
@@ -50,20 +50,19 @@
 .nav-btn {
   background-color: transparent;
   border: none;
-  border-bottom: .8vh #AAA solid;
+  border-bottom: .8vh #fff solid;
   border-radius: 0;
   width: 15vw;
   padding-top: 1.6vh;
   margin-right: 3px;
   font-size: 2vh;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color: #AAA;
+  color: #fff;
 }
 
 .nav-btn:hover {
-  background-color: rgba(0,0,0,0.5);
-  border-color: #DDD;
-  color: #DDD;
+  border-color: #dac1ff;
+  background-color: transparent;
 }
 
 .nav-btn.selected {

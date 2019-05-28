@@ -7,10 +7,8 @@
 
 <script>
 import apiWrapper from '@/apiWrapper'
-import { delay } from '@/functions'
 import CoffeeMap from '@/components/CoffeeMap'
 import CoffeeList from '@/components/CoffeeList'
-
 
 export default {
   name: 'Home',
@@ -24,7 +22,7 @@ export default {
     }
   },
   async mounted() {
-    this.countries = (await apiWrapper.countries()).sort((a,b) => b.coffee_quantity - a.coffee_quantity)
+    this.countries = (await apiWrapper.countries()).sort((a, b) => b.coffee_quantity - a.coffee_quantity)
   }
 }
 </script>

@@ -10,7 +10,7 @@ import { checkJwt, checkJwtRole } from '../middlewares/auth'
 
 const router = express.Router()
 
-router.get('/offers', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async (req, res) => {
+router.get('/offers', checkJwt, checkJwtRole('Exporter'), asyncMiddleware(async (req, res) => {
   const data = await db.Exporter.listOffers(req.user.id)
     .catch(err => {
       throw boom.badRequest(`Could not get the list of offers. ${err.message}`)
@@ -19,7 +19,7 @@ router.get('/offers', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async 
   res.json({ data })
 }))
 
-router.post('/offers', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async (req, res) => {
+router.post('/offers', checkJwt, checkJwtRole('Exporter'), asyncMiddleware(async (req, res) => {
   checkRequiredParameters(['coffeeType', 'originCountryCode', 'amount', 'bagPrice'], req.body)
 
   const { coffeeType, originCountryCode, amount, bagPrice } = req.body
@@ -33,7 +33,7 @@ router.post('/offers', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async
 }))
 
 
-router.get('/orders', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async (req, res) => {
+router.get('/orders', checkJwt, checkJwtRole('Exporter'), asyncMiddleware(async (req, res) => {
   const data = await db.Exporter.listOrders(req.user.id)
     .catch(err => {
       throw boom.badRequest(`Could not get the list of orders. ${err.message}`)
@@ -42,7 +42,7 @@ router.get('/orders', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async 
   res.json({ data })
 }))
 
-router.post('/order/:orderId/progress', checkJwt, checkJwtRole('exporter'), asyncMiddleware(async (req, res) => {
+router.post('/order/:orderId/progress', checkJwt, checkJwtRole('Exporter'), asyncMiddleware(async (req, res) => {
   checkRequiredParameters(['newProgressState'], req.body)
   checkRequiredParameters(['orderId'], req.params)
 

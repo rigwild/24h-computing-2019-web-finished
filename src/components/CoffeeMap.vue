@@ -59,17 +59,18 @@ export default {
       capture: true,
       passive: false
     })
+    // eslint-disable-next-line new-cap
     this.map = new svgMap(this.options())
   },
   methods: {
     options(countries = this.$props.countries) {
       let maxTotal = 0
-      const values = (countries || []).reduce((values, country) => {
+      const mapValues = (countries || []).reduce((values, country) => {
         values[country.countryCode.toUpperCase()] = {
-          ...country, 
-          robusta : (country.robusta * 100 || 0),
-          arabica : ((1 - country.robusta) * 100 || 0)
-        };
+          ...country,
+          robusta: country.robusta * 100 || 0,
+          arabica: ((1 - country.robusta) * 100 || 0)
+        }
         if (maxTotal < country.coffee_quantity)
           maxTotal = country.coffee_quantity
         return values
@@ -106,7 +107,7 @@ export default {
             }
           },
           applyData: 'coffee_quantity',
-          values
+          values: mapValues
         }
       }
     }
