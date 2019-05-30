@@ -123,7 +123,7 @@ export default {
       this.loadingMessage = 'Registering...'
       this.errorMessage = null
       try {
-        await apiWrapper.register(this.username, this.password, this.role, this.street, this.postalCode, this.countryCode, this.phone, this.city)
+        await apiWrapper.User.register(this.username, this.password, this.role, this.street, this.postalCode, this.countryCode, this.phone, this.city)
         this.$router.push({ name: 'Login' })
       }
       catch (err) {

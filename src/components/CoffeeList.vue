@@ -39,21 +39,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  props: {
-    countries: {
-      type: Array,
-      default: () => []
-    }
-  },
   computed: {
+    ...mapState(['countries']),
     total() {
       return this.countries.reduce((sum, country) => sum + country.coffee_quantity, 0)
     }
   }
 }
 </script>
-<style>
+
+<style scoped>
 li {
   list-style: none;
 }

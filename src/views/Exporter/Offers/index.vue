@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card header="Your coffee offers">
-      <Promised v-if="offers" :promise="offers">
+      <Promised v-if="offersPromise" :promise="offersPromise">
         <template v-slot:pending>
           <Loader />
         </template>
@@ -53,11 +53,11 @@
           <b-alert v-text="error.message" dismissible show class="mt-3" variant="danger" />
         </template>
       </Promised>
-    </b-card>
 
-    <div class="d-flex justify-content-around add-btn-container">
-      <b-button class="add-btn btn-pink">Add an offer</b-button>
-    </div>
+      <div class="text-center mt-3">
+        <b-button :to="{ name: 'ExporterCreateOffer' }" class="add-btn btn-pink">Add an offer</b-button>
+      </div>
+    </b-card>
   </div>
 </template>
 
@@ -67,30 +67,18 @@ import DataTable from '@/components/DataTable'
 import apiWrapper from '@/apiWrapper'
 
 export default {
-  name: 'Orders',
+  name: 'ExporterOffers',
   components: {
     Loader,
     DataTable
   },
-  props: {
-    id: {
-      type: String,
-      required: false,
-      default: null
-    }
-  },
   data() {
     return {
-      offers: null
+      offersPromise: null
     }
   },
   mounted() {
-    this.offers = apiWrapper.getOffers()
-  },
-  methods: {
-    async createOffer() {
-      await apiWrapper.createOffer()
-    }
+    this.offersPromise = apiWrapper.Exporter.getOffers()
   }
 }
 </script>

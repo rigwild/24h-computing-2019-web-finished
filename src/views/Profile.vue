@@ -56,7 +56,7 @@ export default {
   methods: {
     // Load the requested profile
     loadProfile() {
-      this.profilePromise = apiWrapper.profile(this.id)
+      this.profilePromise = apiWrapper.User.profile(this.id)
     }
   }
 }

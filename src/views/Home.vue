@@ -1,12 +1,12 @@
 <template>
   <div>
-    <coffee-map :countries="countries" />
-    <coffee-list :countries="countries" />
+    <coffee-map v-if="areCountriesLoaded" />
+    <coffee-list v-if="areCountriesLoaded" />
   </div>
 </template>
 
 <script>
-import apiWrapper from '@/apiWrapper'
+import { mapGetters } from 'vuex'
 import CoffeeMap from '@/components/CoffeeMap'
 import CoffeeList from '@/components/CoffeeList'
 
@@ -16,13 +16,8 @@ export default {
     CoffeeMap,
     CoffeeList
   },
-  data() {
-    return {
-      countries: null
-    }
-  },
-  async mounted() {
-    this.countries = (await apiWrapper.countries()).sort((a, b) => b.coffee_quantity - a.coffee_quantity)
+  computed: {
+    ...mapGetters(['areCountriesLoaded'])
   }
 }
 </script>

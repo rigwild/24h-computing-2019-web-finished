@@ -25,7 +25,7 @@ import apiWrapper from '@/apiWrapper'
 import Loader from '@/components/Loader'
 
 export default {
-  name: 'Orders',
+  name: 'ExporterOrders',
   components: {
     Loader
   },
@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted() {
-    this.orders = apiWrapper.getOrders()
+    this.orders = apiWrapper.Exporter.getOrders()
   }
 }
 </script>

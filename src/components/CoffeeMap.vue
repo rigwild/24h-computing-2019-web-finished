@@ -3,23 +3,25 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 const elementId = 'coffee-map'
 
 export default {
   name: 'CoffeeMap',
-  props: {
-    countries: {
-      type: Array,
-      default: null
+  data() {
+    return {
+      map: null
     }
   },
-  data() {
-    return {}
+
+  computed: {
+    ...mapState(['countries'])
   },
+
   watch: {
     countries(newValue) {
       this.map.applyData((this.map.options = Object.assign({}, {
-
         // The element to render the map in
         targetElementID: '',
 
@@ -49,32 +51,32 @@ export default {
       }, this.options(newValue))).data)
     }
   },
+
   mounted() {
     /* eslint no-undef:0  */
     const root = document.getElementById(elementId)
     root.addEventListener('wheel', e => {
       e.preventDefault()
       e.returnValue = false
-    }, {
-      capture: true,
-      passive: false
-    })
+    },
+    { capture: true, passive: false })
     // eslint-disable-next-line new-cap
     this.map = new svgMap(this.options())
   },
+
   methods: {
-    options(countries = this.$props.countries) {
+    options() {
       let maxTotal = 0
-      const mapValues = (countries || []).reduce((values, country) => {
+      const mapValues = this.countries.reduce((values, country) => {
         values[country.countryCode.toUpperCase()] = {
           ...country,
           robusta: country.robusta * 100 || 0,
           arabica: ((1 - country.robusta) * 100 || 0)
         }
-        if (maxTotal < country.coffee_quantity)
-          maxTotal = country.coffee_quantity
+        if (maxTotal < country.coffee_quantity) maxTotal = country.coffee_quantity
         return values
       }, {})
+
       return {
         targetElementID: 'coffee-map',
         colorMax: '#5010B0',

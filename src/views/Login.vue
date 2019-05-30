@@ -10,6 +10,7 @@
               type="text"
               required
               placeholder="Username"
+              :disabled="loadingMessage"
             />
           </b-form-group>
 
@@ -20,6 +21,7 @@
               type="password"
               required
               placeholder="Password"
+              :disabled="loadingMessage"
             />
           </b-form-group>
 

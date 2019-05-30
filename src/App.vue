@@ -10,8 +10,8 @@
 
       <b-button-group v-if="loggedIn && userData.role === 'Exporter'" class="mx-auto align-self-stretch nav-container">
         <!-- <b-button disabled size="sm">Exporter</b-button> -->
-        <b-button :to="{ name: 'Orders' }" size="sm" class="nav-btn">Orders</b-button>
-        <b-button :to="{ name: 'Offers' }" size="sm" class="nav-btn">Products</b-button>
+        <b-button :to="{ name: 'ExporterOrders' }" size="sm" class="nav-btn">Orders</b-button>
+        <b-button :to="{ name: 'ExporterOffers' }" size="sm" class="nav-btn">Products</b-button>
         <b-button :to="{ name: 'Profile' }" size="sm" class="nav-btn">Profile</b-button>
       </b-button-group>
 
@@ -46,8 +46,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import './style.css'
-import FooterComp from '@/components/FooterComp'
 
+import FooterComp from '@/components/FooterComp'
 
 export default {
   components: {
@@ -56,8 +56,11 @@ export default {
   computed: {
     ...mapState(['loggedIn', 'userData'])
   },
+  async mounted() {
+    await this.getCountries()
+  },
   methods: {
-    ...mapActions(['logout'])
+    ...mapActions(['logout', 'getCountries'])
   }
 }
 </script>
